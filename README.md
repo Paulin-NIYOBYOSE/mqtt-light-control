@@ -7,23 +7,40 @@
 
 > A simple web-based application that allows controlling a virtual light via MQTT.
 
-## Install
+## clone the repo
+
+```sh
+pip git clone https://github.com/Paulin-NIYOBYOSE/mqtt-light-control.git
+```
+
+## Install dependecy
 
 ```sh
 pip install paho-mqtt
+```
+
+## Run the python script
+
+```sh
+pip python light_simulation.py
+```
+
+## Run the index.html file
+
+```sh
+pip start index.html
 ```
 
 ## Author
 
 👤 **NIYOBYOSE Paulin**
 
-* Website: https://paulin.vercel.app/
-* Twitter: [@dripdollar\_rw](https://twitter.com/dripdollar\_rw)
-* Github: [@Paulin-NIYOBYOSE](https://github.com/Paulin-NIYOBYOSE)
+- Website: https://paulin.vercel.app/
+- Twitter: [@dripdollar_rw](https://twitter.com/dripdollar_rw)
+- Github: [@Paulin-NIYOBYOSE](https://github.com/Paulin-NIYOBYOSE)
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
 
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+---
