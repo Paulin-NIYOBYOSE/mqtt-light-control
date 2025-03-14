@@ -7,28 +7,28 @@
 
 > A simple web-based application that allows controlling a virtual light via MQTT.
 
-## clone the repo
+## 1. clone the repo
 
 ```sh
-pip git clone https://github.com/Paulin-NIYOBYOSE/mqtt-light-control.git
+git clone https://github.com/Paulin-NIYOBYOSE/mqtt-light-control.git
 ```
 
-## Install dependecy
+## 2. Install dependecy
 
 ```sh
 pip install paho-mqtt
 ```
 
-## Run the python script
+## 3. Run the python script
 
 ```sh
-pip python light_simulation.py
+python light_simulation.py
 ```
 
-## Run the index.html file
+## 4. Run the index.html file
 
 ```sh
-pip start index.html
+start index.html
 ```
 
 ## Author
