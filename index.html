@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Light Control</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f3f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #ffffff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 40px 60px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 15px;
+            transition: transform 0.2s ease, background-color 0.3s;
+        }
+
+        .btn-on {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-off {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .status {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #e8f5e9;
+            font-size: 18px;
+        }
+
+        .status-message {
+            font-weight: bold;
+        }
+
+        .connection-status {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Media Query for small screens */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 30px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>MQTT Light Control</h1>
+
+        <div>
+            <button id="btnOn" class="btn btn-on">Turn ON</button>
+            <button id="btnOff" class="btn btn-off">Turn OFF</button>
+        </div>
+
+        <div class="status">
+            <p>Status: <span id="statusMessage" class="status-message">Not sent yet</span></p>
+        </div>
+
+        <div class="connection-status">
+            <p>Connection: <span id="connectionStatus">Disconnected</span></p>
+        </div>
+    </div>
+
+    <script>
+        // MQTT Configuration
+        const brokerUrl = 'wss://broker.emqx.io:8084/mqtt';
+        const clientId = 'web_client_' + Math.random().toString(16).substr(2, 8);
+        const topic = '/student_group/light_control';
+
+        // MQTT Client
+        let client = mqtt.connect(brokerUrl, {
+            clientId: clientId,
+            clean: true,
+            connectTimeout: 4000,
+            reconnectPeriod: 1000
+        });
+
+        // Connection event handlers
+        client.on('connect', () => {
+            console.log('Connected to MQTT broker');
+            document.getElementById('connectionStatus').textContent = 'Connected';
+            document.getElementById('connectionStatus').style.color = '#4CAF50';
+        });
+
+        client.on('error', (err) => {
+            console.error('Connection error:', err);
+            document.getElementById('connectionStatus').textContent = 'Error: ' + err.message;
+            document.getElementById('connectionStatus').style.color = '#f44336';
+        });
+
+        client.on('reconnect', () => {
+            console.log('Reconnecting...');
+            document.getElementById('connectionStatus').textContent = 'Reconnecting...';
+            document.getElementById('connectionStatus').style.color = '#ff9800';
+        });
+
+        // Button event listeners
+        document.getElementById('btnOn').addEventListener('click', () => {
+            sendCommand('ON');
+        });
+
+        document.getElementById('btnOff').addEventListener('click', () => {
+            sendCommand('OFF');
+        });
+
+        // Function to send MQTT message
+        function sendCommand(command) {
+            if (!client.connected) {
+                alert('Not connected to MQTT broker. Please wait for connection.');
+                return;
+            }
+
+            client.publish(topic, command, { qos: 0, retain: false }, (error) => {
+                if (error) {
+                    console.error('Publish error:', error);
+                    alert('Failed to send command: ' + error.message);
+                } else {
+                    console.log('Published:', command);
+                    updateStatus(command);
+                }
+            });
+        }
+
+        // Update status message
+        function updateStatus(command) {
+            const statusElement = document.getElementById('statusMessage');
+            statusElement.textContent = `Light is TURNED ${command}`;
+            statusElement.style.color = command === 'ON' ? '#4CAF50' : '#f44336';
+        }
+    </script>
+</body>
+
+</html>
