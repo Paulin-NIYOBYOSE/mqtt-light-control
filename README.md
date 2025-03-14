@@ -1,59 +1,29 @@
-# MQTT-Based Light Control System
+<h1 align="center">Welcome to mqtt-light-control 👋</h1>
+<p>
+  <a href="https://twitter.com/dripdollar\_rw" target="_blank">
+    <img alt="Twitter: dripdollar\_rw" src="https://img.shields.io/twitter/follow/dripdollar\_rw.svg?style=social" />
+  </a>
+</p>
 
-A simple web-based application that allows controlling a virtual light via MQTT. The system consists of two main components:
+> A simple web-based application that allows controlling a virtual light via MQTT.
 
-1. **Web Interface**: A browser-based UI with buttons to turn the light on and off.
-2. **IoT Device Simulator**: A Python script that simulates an ESP8266 device, which connects to the MQTT broker to receive commands.
+## Install
 
-This project is designed to demonstrate the power of MQTT in IoT systems for controlling devices remotely.
-
----
-
-## Components
-
-### Web Interface (index.html)
-
-A simple HTML page with JavaScript that:
-
-- Connects to a public MQTT broker via WebSockets
-- Provides **"Turn ON"** and **"Turn OFF"** buttons to control the virtual light
-- Displays the current light status (ON or OFF)
-- Publishes messages to the MQTT topic `/student_group/light_control` when you press the buttons
-
-### IoT Device Simulator (light_simulation.py)
-
-A Python script that:
-
-- Connects to the same MQTT broker
-- Subscribes to the `/student_group/light_control` topic to receive commands
-- Prints the light status to the terminal whenever a message is received from the web interface (turning the light on or off)
-
----
-
-## How to Run the Project Locally
-
-To run this project on your local machine, follow the steps below:
-
-### Step 1: Clone the Repository
-
-Clone the repository to your local machine using Git:
-
-````bash
-git clone https://github.com/Paulin-NIYOBYOSE/mqtt-light-control.git
-cd mqtt-light-control
-
-### Step 2: Insall dependencies
-
-```bash
+```sh
 pip install paho-mqtt
+```
 
-### Step 3: Run the project
-```bash
-python light_simulation.py
+## Author
 
-### Run also the index.html file
+👤 **NIYOBYOSE Paulin**
 
+* Website: https://paulin.vercel.app/
+* Twitter: [@dripdollar\_rw](https://twitter.com/dripdollar\_rw)
+* Github: [@Paulin-NIYOBYOSE](https://github.com/Paulin-NIYOBYOSE)
 
+## Show your support
 
+Give a ⭐️ if this project helped you!
 
-````
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
